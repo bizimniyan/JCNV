@@ -28,13 +28,13 @@
 
     onCustomWidgetAfterUpdate(changedProps) {
       if ("url" in changedProps && changedProps.url) {
-        this._load(changedProps.url);
+        this.apiLoad(changedProps.url);
       }
     }
 
     // Senkron GET: script tarafina cagri aninda deger dondurebilmek icin.
     // Ayni SAC origin'inde oturum cookie'leri otomatik gider (auth gerekmez).
-    _load(url) {
+    apiLoad(url) {
       this.url = url;
       let ok = false;
       try {
@@ -68,21 +68,21 @@
       return v === null || v === undefined ? "" : String(v);
     }
 
-    _getCount() { return this._rows.length; }
-    _getHttpStatus() { return this._http; }
-    _getRaw() { return this._raw; }
+    apiGetCount() { return this._rows.length; }
+    apiGetHttpStatus() { return this._http; }
+    apiGetRaw() { return this._raw; }
 
-    _getValue(field, index) {
+    apiGetValue(field, index) {
       const i = index || 0;
       return this._rows[i] ? this._field(this._rows[i], field) : "";
     }
 
-    _getValues(field) {
+    apiGetValues(field) {
       return this._rows.map(r => this._field(r, field));
     }
 
-    _getValuesCsv(field) {
-      return this._getValues(field).join(",");
+    apiGetValuesCsv(field) {
+      return this.apiGetValues(field).join(",");
     }
 
     // "f1=v1;f2=v2;..." seklinde istenen sayida kosul; bos string = filtre yok
@@ -98,15 +98,15 @@
       return this._rows.filter(r => conds.every(c => this._field(r, c.f) === c.v));
     }
 
-    _getValuesFiltered(field, filters) {
+    apiGetValuesFiltered(field, filters) {
       return this._applyFilters(filters).map(r => this._field(r, field));
     }
 
-    _getValuesFilteredCsv(field, filters) {
-      return this._getValuesFiltered(field, filters).join(",");
+    apiGetValuesFilteredCsv(field, filters) {
+      return this.apiGetValuesFiltered(field, filters).join(",");
     }
 
-    _getValueOfMaxFiltered(returnField, orderField, filters) {
+    apiGetValueOfMaxFiltered(returnField, orderField, filters) {
       return this._maxRow(this._applyFilters(filters), orderField, returnField);
     }
 
