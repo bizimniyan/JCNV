@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.7",
+    "version": "1.0.8",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=107",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=108",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=107",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=108",
             "integrity": "",
             "ignoreIntegrity": true
         }
@@ -131,6 +131,34 @@
                 {
                     "name": "filters",
                     "type": "string"
+                }
+            ],
+            "returnType": "string"
+        },
+        "toImportBody": {
+            "description": "Yuklu satirlari SAC Data Import body'sine cevirir, string doner. mapSpec: \"Hedef=Kaynak;Sabit='deger';...\" (null/bos -> #)",
+            "parameters": [
+                {
+                    "name": "mapSpec",
+                    "type": "string"
+                }
+            ],
+            "returnType": "string"
+        },
+        "toImportBodyRange": {
+            "description": "toImportBody'nin parcali hali: from (0 tabanli), count (0=hepsi)",
+            "parameters": [
+                {
+                    "name": "mapSpec",
+                    "type": "string"
+                },
+                {
+                    "name": "from",
+                    "type": "integer"
+                },
+                {
+                    "name": "count",
+                    "type": "integer"
                 }
             ],
             "returnType": "string"

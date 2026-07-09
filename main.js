@@ -87,12 +87,55 @@
       return ok;
     }
 
-    // "a.b.c" seklinde ic ice alan okuma
-    _field(row, path) {
+    // "a.b.c" seklinde ic ice alan okuma (ham deger — sayi sayi kalir)
+    _fieldRaw(row, path) {
       let v = row;
       const parts = String(path).split(".");
       for (let i = 0; i < parts.length && v !== null && v !== undefined; i++) v = v[parts[i]];
-      return v === null || v === undefined ? "" : String(v);
+      return v === null || v === undefined ? null : v;
+    }
+
+    _field(row, path) {
+      const v = this._fieldRaw(row, path);
+      return v === null ? "" : String(v);
+    }
+
+    // Yuklu satirlari SAC Data Import body'sine cevirir: {"Data":[{...}]} (string doner).
+    // mapSpec: "Hedef=KaynakAlan;Hedef2=Kaynak2;Sabit='deger';..."
+    //   - sag taraf tek tirnakliysa sabit deger, degilse satirdan okunur (a.b.c olur)
+    //   - kaynak degeri null/bos ise "#" yazilir; sayilar sayi olarak kalir
+    toImportBody(mapSpec) {
+      return this.toImportBodyRange(mapSpec, 0, 0);
+    }
+
+    // from: 0 tabanli baslangic, count: satir sayisi (0 = hepsi) — buyuk veri icin parcalama
+    toImportBodyRange(mapSpec, from, count) {
+      const maps = String(mapSpec || "")
+        .split(";")
+        .map(s => s.trim())
+        .filter(s => s.length > 0)
+        .map(s => {
+          const i = s.indexOf("=");
+          return { t: s.substring(0, i).trim(), s: s.substring(i + 1).trim() };
+        });
+      const start = from || 0;
+      const end = count > 0 ? Math.min(start + count, this._rows.length) : this._rows.length;
+      const out = [];
+      for (let r = start; r < end; r++) {
+        const row = this._rows[r];
+        const o = {};
+        for (let m = 0; m < maps.length; m++) {
+          const src = maps[m].s;
+          if (src.length > 1 && src.charAt(0) === "'" && src.charAt(src.length - 1) === "'") {
+            o[maps[m].t] = src.substring(1, src.length - 1);
+          } else {
+            const v = this._fieldRaw(row, src);
+            o[maps[m].t] = (v === null || v === "") ? "#" : v;
+          }
+        }
+        out.push(o);
+      }
+      return JSON.stringify({ Data: out });
     }
 
     getCount() { return this._rows.length; }
