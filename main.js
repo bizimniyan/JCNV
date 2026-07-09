@@ -28,13 +28,13 @@
 
     onCustomWidgetAfterUpdate(changedProps) {
       if ("url" in changedProps && changedProps.url) {
-        this.load(changedProps.url);
+        this._load(changedProps.url);
       }
     }
 
     // Senkron GET: script tarafina cagri aninda deger dondurebilmek icin.
     // Ayni SAC origin'inde oturum cookie'leri otomatik gider (auth gerekmez).
-    load(url) {
+    _load(url) {
       this.url = url;
       let ok = false;
       try {
@@ -68,21 +68,21 @@
       return v === null || v === undefined ? "" : String(v);
     }
 
-    getCount() { return this._rows.length; }
-    getHttpStatus() { return this._http; }
-    getRaw() { return this._raw; }
+    _getCount() { return this._rows.length; }
+    _getHttpStatus() { return this._http; }
+    _getRaw() { return this._raw; }
 
-    getValue(field, index) {
+    _getValue(field, index) {
       const i = index || 0;
       return this._rows[i] ? this._field(this._rows[i], field) : "";
     }
 
-    getValues(field) {
+    _getValues(field) {
       return this._rows.map(r => this._field(r, field));
     }
 
-    getValuesCsv(field) {
-      return this.getValues(field).join(",");
+    _getValuesCsv(field) {
+      return this._getValues(field).join(",");
     }
 
     // "f1=v1;f2=v2;..." seklinde istenen sayida kosul; bos string = filtre yok
@@ -98,15 +98,15 @@
       return this._rows.filter(r => conds.every(c => this._field(r, c.f) === c.v));
     }
 
-    getValuesFiltered(field, filters) {
+    _getValuesFiltered(field, filters) {
       return this._applyFilters(filters).map(r => this._field(r, field));
     }
 
-    getValuesFilteredCsv(field, filters) {
-      return this.getValuesFiltered(field, filters).join(",");
+    _getValuesFilteredCsv(field, filters) {
+      return this._getValuesFiltered(field, filters).join(",");
     }
 
-    getValueOfMaxFiltered(returnField, orderField, filters) {
+    _getValueOfMaxFiltered(returnField, orderField, filters) {
       return this._maxRow(this._applyFilters(filters), orderField, returnField);
     }
 

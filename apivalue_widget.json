@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=103",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=104",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=103",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=104",
             "integrity": "",
             "ignoreIntegrity": true
         }
@@ -32,25 +32,25 @@
             "description": "URL'den JSON ceker (GET), satirlari hafizaya alir",
             "parameters": [ { "name": "url", "type": "string", "description": "GET URL" } ],
             "returnType": "boolean",
-            "body": "return this.load(url);"
+            "body": "return this._load(url);"
         },
         "getCount": {
             "description": "Satir sayisi",
             "parameters": [],
             "returnType": "integer",
-            "body": "return this.getCount();"
+            "body": "return this._getCount();"
         },
         "getHttpStatus": {
             "description": "Son cagrinin HTTP kodu",
             "parameters": [],
             "returnType": "integer",
-            "body": "return this.getHttpStatus();"
+            "body": "return this._getHttpStatus();"
         },
         "getRaw": {
             "description": "Ham yanit metni",
             "parameters": [],
             "returnType": "string",
-            "body": "return this.getRaw();"
+            "body": "return this._getRaw();"
         },
         "getValue": {
             "description": "Tek deger: field (a.b.c olabilir), index (0 tabanli)",
@@ -59,19 +59,19 @@
                 { "name": "index", "type": "integer" }
             ],
             "returnType": "string",
-            "body": "return this.getValue(field,index);"
+            "body": "return this._getValue(field,index);"
         },
         "getValues": {
             "description": "Bir alanin tum degerleri",
             "parameters": [ { "name": "field", "type": "string" } ],
             "returnType": "string[]",
-            "body": "return this.getValues(field);"
+            "body": "return this._getValues(field);"
         },
         "getValuesCsv": {
             "description": "Bir alanin tum degerleri (virgullu tek string)",
             "parameters": [ { "name": "field", "type": "string" } ],
             "returnType": "string",
-            "body": "return this.getValuesCsv(field);"
+            "body": "return this._getValuesCsv(field);"
         },
         "getValuesFiltered": {
             "description": "Istenen sayida kosul: filters = \"f1=v1;f2=v2;...\" (bos = filtre yok)",
@@ -80,7 +80,7 @@
                 { "name": "filters", "type": "string" }
             ],
             "returnType": "string[]",
-            "body": "return this.getValuesFiltered(field,filters);"
+            "body": "return this._getValuesFiltered(field,filters);"
         },
         "getValuesFilteredCsv": {
             "description": "getValuesFiltered sonucu virgullu tek string",
@@ -89,7 +89,7 @@
                 { "name": "filters", "type": "string" }
             ],
             "returnType": "string",
-            "body": "return this.getValuesFilteredCsv(field,filters);"
+            "body": "return this._getValuesFilteredCsv(field,filters);"
         },
         "getValueOfMaxFiltered": {
             "description": "Kosullara uyan satirlar icinde orderField'i en buyuk satirin returnField degeri; filters = \"f1=v1;f2=v2;...\"",
@@ -99,7 +99,7 @@
                 { "name": "filters", "type": "string" }
             ],
             "returnType": "string",
-            "body": "return this.getValueOfMaxFiltered(returnField,orderField,filters);"
+            "body": "return this._getValueOfMaxFiltered(returnField,orderField,filters);"
         }
     },
     "events": {}
