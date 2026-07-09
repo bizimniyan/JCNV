@@ -85,25 +85,6 @@
       return this.getValues(field).join(",");
     }
 
-    getValuesWhere(field, filterField, filterValue) {
-      return this._rows
-        .filter(r => this._field(r, filterField) === String(filterValue))
-        .map(r => this._field(r, field));
-    }
-
-    getValuesWhereCsv(field, filterField, filterValue) {
-      return this.getValuesWhere(field, filterField, filterValue).join(",");
-    }
-
-    getValueOfMax(returnField, orderField) {
-      return this._maxRow(this._rows, orderField, returnField);
-    }
-
-    getValueOfMaxWhere(returnField, orderField, filterField, filterValue) {
-      const rows = this._rows.filter(r => this._field(r, filterField) === String(filterValue));
-      return this._maxRow(rows, orderField, returnField);
-    }
-
     // "f1=v1;f2=v2;..." seklinde istenen sayida kosul; bos string = filtre yok
     _applyFilters(filters) {
       const conds = String(filters || "")
@@ -127,18 +108,6 @@
 
     getValueOfMaxFiltered(returnField, orderField, filters) {
       return this._maxRow(this._applyFilters(filters), orderField, returnField);
-    }
-
-    getValuesWhere2(field, f1, v1, f2, v2) {
-      return this._rows
-        .filter(r => this._field(r, f1) === String(v1) && this._field(r, f2) === String(v2))
-        .map(r => this._field(r, field));
-    }
-
-    getValueOfMaxWhere2(returnField, orderField, f1, v1, f2, v2) {
-      const rows = this._rows.filter(r =>
-        this._field(r, f1) === String(v1) && this._field(r, f2) === String(v2));
-      return this._maxRow(rows, orderField, returnField);
     }
 
     _maxRow(rows, orderField, returnField) {

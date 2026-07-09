@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=102",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=103",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=102",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=103",
             "integrity": "",
             "ignoreIntegrity": true
         }
@@ -72,71 +72,6 @@
             "parameters": [ { "name": "field", "type": "string" } ],
             "returnType": "string",
             "body": "return this.getValuesCsv(field);"
-        },
-        "getValuesWhere": {
-            "description": "filterField==filterValue olan satirlardan field degerleri",
-            "parameters": [
-                { "name": "field", "type": "string" },
-                { "name": "filterField", "type": "string" },
-                { "name": "filterValue", "type": "string" }
-            ],
-            "returnType": "string[]",
-            "body": "return this.getValuesWhere(field,filterField,filterValue);"
-        },
-        "getValuesWhereCsv": {
-            "description": "getValuesWhere sonucu virgullu tek string",
-            "parameters": [
-                { "name": "field", "type": "string" },
-                { "name": "filterField", "type": "string" },
-                { "name": "filterValue", "type": "string" }
-            ],
-            "returnType": "string",
-            "body": "return this.getValuesWhereCsv(field,filterField,filterValue);"
-        },
-        "getValueOfMax": {
-            "description": "orderField'i en buyuk satirin returnField degeri",
-            "parameters": [
-                { "name": "returnField", "type": "string" },
-                { "name": "orderField", "type": "string" }
-            ],
-            "returnType": "string",
-            "body": "return this.getValueOfMax(returnField,orderField);"
-        },
-        "getValueOfMaxWhere": {
-            "description": "Filtreli satirlar icinde orderField'i en buyuk satirin returnField degeri",
-            "parameters": [
-                { "name": "returnField", "type": "string" },
-                { "name": "orderField", "type": "string" },
-                { "name": "filterField", "type": "string" },
-                { "name": "filterValue", "type": "string" }
-            ],
-            "returnType": "string",
-            "body": "return this.getValueOfMaxWhere(returnField,orderField,filterField,filterValue);"
-        },
-        "getValuesWhere2": {
-            "description": "Iki filtre: f1==v1 VE f2==v2 olan satirlardan field degerleri",
-            "parameters": [
-                { "name": "field", "type": "string" },
-                { "name": "f1", "type": "string" },
-                { "name": "v1", "type": "string" },
-                { "name": "f2", "type": "string" },
-                { "name": "v2", "type": "string" }
-            ],
-            "returnType": "string[]",
-            "body": "return this.getValuesWhere2(field,f1,v1,f2,v2);"
-        },
-        "getValueOfMaxWhere2": {
-            "description": "Iki filtreli satirlar icinde orderField'i en buyuk satirin returnField degeri",
-            "parameters": [
-                { "name": "returnField", "type": "string" },
-                { "name": "orderField", "type": "string" },
-                { "name": "f1", "type": "string" },
-                { "name": "v1", "type": "string" },
-                { "name": "f2", "type": "string" },
-                { "name": "v2", "type": "string" }
-            ],
-            "returnType": "string",
-            "body": "return this.getValueOfMaxWhere2(returnField,orderField,f1,v1,f2,v2);"
         },
         "getValuesFiltered": {
             "description": "Istenen sayida kosul: filters = \"f1=v1;f2=v2;...\" (bos = filtre yok)",
