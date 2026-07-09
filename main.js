@@ -109,11 +109,16 @@
     }
 
     // from: 0 tabanli baslangic, count: satir sayisi (0 = hepsi) — buyuk veri icin parcalama
+    // mapSpec "*" ile baslarsa (veya bos ise) TUM alanlar aynen kopyalanir;
+    // "*"dan sonraki girisler uzerine yazar: "*;ZPARAMETRE='STS0013';Date=DONEM"
     toImportBodyRange(mapSpec, from, count) {
-      const maps = String(mapSpec || "")
+      const entries = String(mapSpec || "")
         .split(";")
         .map(s => s.trim())
-        .filter(s => s.length > 0)
+        .filter(s => s.length > 0);
+      const copyAll = entries.length === 0 || entries[0] === "*";
+      const maps = entries
+        .filter(s => s !== "*")
         .map(s => {
           const i = s.indexOf("=");
           return { t: s.substring(0, i).trim(), s: s.substring(i + 1).trim() };
@@ -124,6 +129,12 @@
       for (let r = start; r < end; r++) {
         const row = this._rows[r];
         const o = {};
+        if (copyAll) {
+          for (const k in row) {
+            const v = row[k];
+            o[k] = (v === null || v === undefined || v === "") ? "#" : v;
+          }
+        }
         for (let m = 0; m < maps.length; m++) {
           const src = maps[m].s;
           if (src.length > 1 && src.charAt(0) === "'" && src.charAt(src.length - 1) === "'") {

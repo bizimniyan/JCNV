@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.8",
+    "version": "1.0.9",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=108",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=109",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=108",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=109",
             "integrity": "",
             "ignoreIntegrity": true
         }
