@@ -32,19 +32,46 @@
       }
     }
 
-    // Senkron GET: script tarafina cagri aninda deger dondurebilmek icin.
+    // Senkron istekler: script tarafina cagri aninda deger dondurebilmek icin.
     // Ayni SAC origin'inde oturum cookie'leri otomatik gider (auth gerekmez).
     load(url) {
+      return this._request("GET", url, null);
+    }
+
+    // POST: CSRF token'i icerde otomatik alinir (GET /api/v1/csrf, ayni session).
+    post(url, body) {
+      return this._request("POST", url, body || "{}");
+    }
+
+    _csrf(url) {
+      try {
+        const origin = url.split("/").slice(0, 3).join("/");
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", origin + "/api/v1/csrf", false);
+        xhr.setRequestHeader("x-csrf-token", "Fetch");
+        xhr.send(null);
+        return xhr.getResponseHeader("x-csrf-token") || "";
+      } catch (e) {
+        return "";
+      }
+    }
+
+    _request(method, url, body) {
       this.url = url;
       let ok = false;
       try {
         const xhr = new XMLHttpRequest();
-        xhr.open("GET", url, false);
+        xhr.open(method, url, false);
         xhr.setRequestHeader("Accept", "application/json");
-        xhr.send(null);
+        if (method !== "GET") {
+          xhr.setRequestHeader("Content-Type", "application/json");
+          const tok = this._csrf(url);
+          if (tok) xhr.setRequestHeader("x-csrf-token", tok);
+        }
+        xhr.send(body);
         this._http = xhr.status;
         this._raw = xhr.responseText || "";
-        const parsed = JSON.parse(this._raw);
+        const parsed = JSON.parse(this._raw || "{}");
         if (Array.isArray(parsed)) this._rows = parsed;
         else if (parsed && Array.isArray(parsed.value)) this._rows = parsed.value; // OData govdesi
         else if (parsed && typeof parsed === "object") this._rows = [parsed];

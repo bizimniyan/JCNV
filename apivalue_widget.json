@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.6",
+    "version": "1.0.7",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=106",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=107",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=106",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=107",
             "integrity": "",
             "ignoreIntegrity": true
         }
@@ -31,6 +31,22 @@
         }
     },
     "methods": {
+        "post": {
+            "description": "URL'e JSON POST eder (CSRF otomatik), yaniti hafizaya alir",
+            "parameters": [
+                {
+                    "name": "url",
+                    "type": "string",
+                    "description": "POST URL"
+                },
+                {
+                    "name": "body",
+                    "type": "string",
+                    "description": "JSON govde (string)"
+                }
+            ],
+            "returnType": "boolean"
+        },
         "load": {
             "description": "URL'den JSON ceker (GET), satirlari hafizaya alir",
             "parameters": [
