@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=100",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=101",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=100",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=101",
             "integrity": "",
             "ignoreIntegrity": true
         }
@@ -112,6 +112,31 @@
             ],
             "returnType": "string",
             "body": "return this.getValueOfMaxWhere(returnField,orderField,filterField,filterValue);"
+        },
+        "getValuesWhere2": {
+            "description": "Iki filtre: f1==v1 VE f2==v2 olan satirlardan field degerleri",
+            "parameters": [
+                { "name": "field", "type": "string" },
+                { "name": "f1", "type": "string" },
+                { "name": "v1", "type": "string" },
+                { "name": "f2", "type": "string" },
+                { "name": "v2", "type": "string" }
+            ],
+            "returnType": "string[]",
+            "body": "return this.getValuesWhere2(field,f1,v1,f2,v2);"
+        },
+        "getValueOfMaxWhere2": {
+            "description": "Iki filtreli satirlar icinde orderField'i en buyuk satirin returnField degeri",
+            "parameters": [
+                { "name": "returnField", "type": "string" },
+                { "name": "orderField", "type": "string" },
+                { "name": "f1", "type": "string" },
+                { "name": "v1", "type": "string" },
+                { "name": "f2", "type": "string" },
+                { "name": "v2", "type": "string" }
+            ],
+            "returnType": "string",
+            "body": "return this.getValueOfMaxWhere2(returnField,orderField,f1,v1,f2,v2);"
         }
     },
     "events": {}

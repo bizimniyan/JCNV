@@ -104,6 +104,18 @@
       return this._maxRow(rows, orderField, returnField);
     }
 
+    getValuesWhere2(field, f1, v1, f2, v2) {
+      return this._rows
+        .filter(r => this._field(r, f1) === String(v1) && this._field(r, f2) === String(v2))
+        .map(r => this._field(r, field));
+    }
+
+    getValueOfMaxWhere2(returnField, orderField, f1, v1, f2, v2) {
+      const rows = this._rows.filter(r =>
+        this._field(r, f1) === String(v1) && this._field(r, f2) === String(v2));
+      return this._maxRow(rows, orderField, returnField);
+    }
+
     _maxRow(rows, orderField, returnField) {
       if (!rows.length) return "";
       let best = rows[0];
