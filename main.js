@@ -28,13 +28,13 @@
 
     onCustomWidgetAfterUpdate(changedProps) {
       if ("url" in changedProps && changedProps.url) {
-        this.apiLoad(changedProps.url);
+        this.load(changedProps.url);
       }
     }
 
     // Senkron GET: script tarafina cagri aninda deger dondurebilmek icin.
     // Ayni SAC origin'inde oturum cookie'leri otomatik gider (auth gerekmez).
-    apiLoad(url) {
+    load(url) {
       this.url = url;
       let ok = false;
       try {
@@ -68,21 +68,21 @@
       return v === null || v === undefined ? "" : String(v);
     }
 
-    apiGetCount() { return this._rows.length; }
-    apiGetHttpStatus() { return this._http; }
-    apiGetRaw() { return this._raw; }
+    getCount() { return this._rows.length; }
+    getHttpStatus() { return this._http; }
+    getRaw() { return this._raw; }
 
-    apiGetValue(field, index) {
+    getValue(field, index) {
       const i = index || 0;
       return this._rows[i] ? this._field(this._rows[i], field) : "";
     }
 
-    apiGetValues(field) {
+    getValues(field) {
       return this._rows.map(r => this._field(r, field));
     }
 
-    apiGetValuesCsv(field) {
-      return this.apiGetValues(field).join(",");
+    getValuesCsv(field) {
+      return this.getValues(field).join(",");
     }
 
     // "f1=v1;f2=v2;..." seklinde istenen sayida kosul; bos string = filtre yok
@@ -98,15 +98,15 @@
       return this._rows.filter(r => conds.every(c => this._field(r, c.f) === c.v));
     }
 
-    apiGetValuesFiltered(field, filters) {
+    getValuesFiltered(field, filters) {
       return this._applyFilters(filters).map(r => this._field(r, field));
     }
 
-    apiGetValuesFilteredCsv(field, filters) {
-      return this.apiGetValuesFiltered(field, filters).join(",");
+    getValuesFilteredCsv(field, filters) {
+      return this.getValuesFiltered(field, filters).join(",");
     }
 
-    apiGetValueOfMaxFiltered(returnField, orderField, filters) {
+    getValueOfMaxFiltered(returnField, orderField, filters) {
       return this._maxRow(this._applyFilters(filters), orderField, returnField);
     }
 

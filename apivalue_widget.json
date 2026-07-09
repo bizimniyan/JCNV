@@ -6,100 +6,136 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=105",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=106",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=105",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=106",
             "integrity": "",
             "ignoreIntegrity": true
         }
     ],
     "properties": {
-        "url": { "type": "string", "default": "" }
+        "url": {
+            "type": "string",
+            "default": ""
+        }
     },
     "methods": {
         "load": {
             "description": "URL'den JSON ceker (GET), satirlari hafizaya alir",
-            "parameters": [ { "name": "url", "type": "string", "description": "GET URL" } ],
-            "returnType": "boolean",
-            "body": "return this.apiLoad(url);"
+            "parameters": [
+                {
+                    "name": "url",
+                    "type": "string",
+                    "description": "GET URL"
+                }
+            ],
+            "returnType": "boolean"
         },
         "getCount": {
             "description": "Satir sayisi",
             "parameters": [],
-            "returnType": "integer",
-            "body": "return this.apiGetCount();"
+            "returnType": "integer"
         },
         "getHttpStatus": {
             "description": "Son cagrinin HTTP kodu",
             "parameters": [],
-            "returnType": "integer",
-            "body": "return this.apiGetHttpStatus();"
+            "returnType": "integer"
         },
         "getRaw": {
             "description": "Ham yanit metni",
             "parameters": [],
-            "returnType": "string",
-            "body": "return this.apiGetRaw();"
+            "returnType": "string"
         },
         "getValue": {
             "description": "Tek deger: field (a.b.c olabilir), index (0 tabanli)",
             "parameters": [
-                { "name": "field", "type": "string" },
-                { "name": "index", "type": "integer" }
+                {
+                    "name": "field",
+                    "type": "string"
+                },
+                {
+                    "name": "index",
+                    "type": "integer"
+                }
             ],
-            "returnType": "string",
-            "body": "return this.apiGetValue(field,index);"
+            "returnType": "string"
         },
         "getValues": {
             "description": "Bir alanin tum degerleri",
-            "parameters": [ { "name": "field", "type": "string" } ],
-            "returnType": "string[]",
-            "body": "return this.apiGetValues(field);"
+            "parameters": [
+                {
+                    "name": "field",
+                    "type": "string"
+                }
+            ],
+            "returnType": "string[]"
         },
         "getValuesCsv": {
             "description": "Bir alanin tum degerleri (virgullu tek string)",
-            "parameters": [ { "name": "field", "type": "string" } ],
-            "returnType": "string",
-            "body": "return this.apiGetValuesCsv(field);"
+            "parameters": [
+                {
+                    "name": "field",
+                    "type": "string"
+                }
+            ],
+            "returnType": "string"
         },
         "getValuesFiltered": {
             "description": "Istenen sayida kosul: filters = \"f1=v1;f2=v2;...\" (bos = filtre yok)",
             "parameters": [
-                { "name": "field", "type": "string" },
-                { "name": "filters", "type": "string" }
+                {
+                    "name": "field",
+                    "type": "string"
+                },
+                {
+                    "name": "filters",
+                    "type": "string"
+                }
             ],
-            "returnType": "string[]",
-            "body": "return this.apiGetValuesFiltered(field,filters);"
+            "returnType": "string[]"
         },
         "getValuesFilteredCsv": {
             "description": "getValuesFiltered sonucu virgullu tek string",
             "parameters": [
-                { "name": "field", "type": "string" },
-                { "name": "filters", "type": "string" }
+                {
+                    "name": "field",
+                    "type": "string"
+                },
+                {
+                    "name": "filters",
+                    "type": "string"
+                }
             ],
-            "returnType": "string",
-            "body": "return this.apiGetValuesFilteredCsv(field,filters);"
+            "returnType": "string"
         },
         "getValueOfMaxFiltered": {
             "description": "Kosullara uyan satirlar icinde orderField'i en buyuk satirin returnField degeri; filters = \"f1=v1;f2=v2;...\"",
             "parameters": [
-                { "name": "returnField", "type": "string" },
-                { "name": "orderField", "type": "string" },
-                { "name": "filters", "type": "string" }
+                {
+                    "name": "returnField",
+                    "type": "string"
+                },
+                {
+                    "name": "orderField",
+                    "type": "string"
+                },
+                {
+                    "name": "filters",
+                    "type": "string"
+                }
             ],
-            "returnType": "string",
-            "body": "return this.apiGetValueOfMaxFiltered(returnField,orderField,filters);"
+            "returnType": "string"
         }
     },
     "events": {}
