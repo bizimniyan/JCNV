@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=101",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=102",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=101",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=102",
             "integrity": "",
             "ignoreIntegrity": true
         }
@@ -137,6 +137,34 @@
             ],
             "returnType": "string",
             "body": "return this.getValueOfMaxWhere2(returnField,orderField,f1,v1,f2,v2);"
+        },
+        "getValuesFiltered": {
+            "description": "Istenen sayida kosul: filters = \"f1=v1;f2=v2;...\" (bos = filtre yok)",
+            "parameters": [
+                { "name": "field", "type": "string" },
+                { "name": "filters", "type": "string" }
+            ],
+            "returnType": "string[]",
+            "body": "return this.getValuesFiltered(field,filters);"
+        },
+        "getValuesFilteredCsv": {
+            "description": "getValuesFiltered sonucu virgullu tek string",
+            "parameters": [
+                { "name": "field", "type": "string" },
+                { "name": "filters", "type": "string" }
+            ],
+            "returnType": "string",
+            "body": "return this.getValuesFilteredCsv(field,filters);"
+        },
+        "getValueOfMaxFiltered": {
+            "description": "Kosullara uyan satirlar icinde orderField'i en buyuk satirin returnField degeri; filters = \"f1=v1;f2=v2;...\"",
+            "parameters": [
+                { "name": "returnField", "type": "string" },
+                { "name": "orderField", "type": "string" },
+                { "name": "filters", "type": "string" }
+            ],
+            "returnType": "string",
+            "body": "return this.getValueOfMaxFiltered(returnField,orderField,filters);"
         }
     },
     "events": {}

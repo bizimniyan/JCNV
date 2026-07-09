@@ -104,6 +104,31 @@
       return this._maxRow(rows, orderField, returnField);
     }
 
+    // "f1=v1;f2=v2;..." seklinde istenen sayida kosul; bos string = filtre yok
+    _applyFilters(filters) {
+      const conds = String(filters || "")
+        .split(";")
+        .map(s => s.trim())
+        .filter(s => s.length > 0)
+        .map(s => {
+          const i = s.indexOf("=");
+          return { f: s.substring(0, i).trim(), v: s.substring(i + 1).trim() };
+        });
+      return this._rows.filter(r => conds.every(c => this._field(r, c.f) === c.v));
+    }
+
+    getValuesFiltered(field, filters) {
+      return this._applyFilters(filters).map(r => this._field(r, field));
+    }
+
+    getValuesFilteredCsv(field, filters) {
+      return this.getValuesFiltered(field, filters).join(",");
+    }
+
+    getValueOfMaxFiltered(returnField, orderField, filters) {
+      return this._maxRow(this._applyFilters(filters), orderField, returnField);
+    }
+
     getValuesWhere2(field, f1, v1, f2, v2) {
       return this._rows
         .filter(r => this._field(r, f1) === String(v1) && this._field(r, f2) === String(v2))
