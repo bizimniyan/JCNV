@@ -157,16 +157,9 @@
       const start = from || 0;
       const end = count > 0 ? Math.min(start + count, this._rows.length) : this._rows.length;
 
-      // Kolon tipi tespiti: herhangi bir satirda sayi gorulen kolon SAYISALDIR
-      // -> null/bos deger sayisal kolonda 0, digerlerinde "#" olur
-      const numericCols = {};
-      for (let r = 0; r < this._rows.length; r++) {
-        for (const k in this._rows[r]) {
-          if (typeof this._rows[r][k] === "number") numericCols[k] = true;
-        }
-      }
+      // null -> 0 (measure'lar null gelir), bos string -> "#" (bos boyut)
       const fill = (col, v) =>
-        (v === null || v === undefined || v === "") ? (numericCols[col] ? 0 : "#") : v;
+        (v === null || v === undefined) ? 0 : (v === "" ? "#" : v);
 
       const out = [];
       for (let r = start; r < end; r++) {
