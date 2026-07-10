@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.9",
+    "version": "1.0.10",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=109",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=110",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=109",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=110",
             "integrity": "",
             "ignoreIntegrity": true
         }
@@ -57,6 +57,16 @@
                 }
             ],
             "returnType": "boolean"
+        },
+        "loadAsync": {
+            "description": "Cross-origin (orn. DSP) cookie'li ASYNC GET; bitince onLoaded event'i tetiklenir",
+            "parameters": [
+                {
+                    "name": "url",
+                    "type": "string",
+                    "description": "GET URL"
+                }
+            ]
         },
         "getCount": {
             "description": "Satir sayisi",
@@ -182,5 +192,9 @@
             "returnType": "string"
         }
     },
-    "events": {}
+    "events": {
+        "onLoaded": {
+            "description": "loadAsync tamamlaninca tetiklenir (basari/hata farketmez; getHttpStatus/getCount ile kontrol et)"
+        }
+    }
 }

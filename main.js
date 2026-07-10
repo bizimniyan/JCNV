@@ -70,13 +70,7 @@
         }
         xhr.send(body);
         this._http = xhr.status;
-        this._raw = xhr.responseText || "";
-        const parsed = JSON.parse(this._raw || "{}");
-        if (Array.isArray(parsed)) this._rows = parsed;
-        else if (parsed && Array.isArray(parsed.value)) this._rows = parsed.value; // OData govdesi
-        else if (parsed && typeof parsed === "object") this._rows = [parsed];
-        else this._rows = [];
-        ok = this._http >= 200 && this._http < 300;
+        ok = this._consume(xhr.responseText || "");
       } catch (e) {
         this._rows = [];
         this._raw = String(e);
@@ -85,6 +79,43 @@
       }
       this._render(ok);
       return ok;
+    }
+
+    // Yaniti parse edip satirlari hafizaya alir; basari = HTTP 2xx + JSON parse
+    _consume(text) {
+      this._raw = text;
+      try {
+        const parsed = JSON.parse(this._raw || "{}");
+        if (Array.isArray(parsed)) this._rows = parsed;
+        else if (parsed && Array.isArray(parsed.value)) this._rows = parsed.value; // OData govdesi
+        else if (parsed && typeof parsed === "object") this._rows = [parsed];
+        else this._rows = [];
+        return this._http >= 200 && this._http < 300;
+      } catch (e) {
+        this._rows = [];
+        this._raw = "JSON degil: " + String(this._raw).substring(0, 150);
+        return false;
+      }
+    }
+
+    // Cross-origin (orn. Datasphere) icin: cookie'li ASYNC GET.
+    // Bitince "onLoaded" event'i tetiklenir — script'in devami o event'e yazilir.
+    loadAsync(url) {
+      this.url = url;
+      const self = this;
+      fetch(url, { credentials: "include", headers: { "Accept": "application/json" } })
+        .then(function (res) { self._http = res.status; return res.text(); })
+        .then(function (txt) {
+          self._render(self._consume(txt));
+          self.dispatchEvent(new Event("onLoaded"));
+        })
+        .catch(function (err) {
+          self._http = 0;
+          self._rows = [];
+          self._raw = String(err);
+          self._render(false);
+          self.dispatchEvent(new Event("onLoaded"));
+        });
     }
 
     // "a.b.c" seklinde ic ice alan okuma (ham deger — sayi sayi kalir)
