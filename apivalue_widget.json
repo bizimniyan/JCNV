@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.13",
+    "version": "1.0.14",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=113",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=114",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=113",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=114",
             "integrity": "",
             "ignoreIntegrity": true
         }
@@ -66,6 +66,12 @@
                     "type": "string",
                     "description": "GET URL"
                 }
+            ]
+        },
+        "loadFrame": {
+            "description": "Gizli iframe ile oturum kurup cookie'li ASYNC GET dener (secret'siz cross-origin); bitince onLoaded tetiklenir",
+            "parameters": [
+                { "name": "url", "type": "string" }
             ]
         },
         "loadToken": {

@@ -141,6 +141,46 @@
         .catch(function (err) { fail("TOKEN HATASI: " + String(err)); });
     }
 
+    // Gizli iframe ile once hedef sitede oturum kurar (login/SSO zinciri iframe'de kosar),
+    // sonra cookie'li fetch dener. JSON gelene kadar ~8 sn boyunca tekrar dener.
+    // Bitince "onLoaded" event'i tetiklenir.
+    loadFrame(url) {
+      this.url = url;
+      const self = this;
+      const frame = document.createElement("iframe");
+      frame.style.display = "none";
+      frame.src = url;
+      document.body.appendChild(frame);
+      let kalan = 8;
+      const dene = function () {
+        fetch(url, { credentials: "include", headers: { "Accept": "application/json" } })
+          .then(function (res) { self._http = res.status; return res.text(); })
+          .then(function (txt) {
+            const ok = self._consume(txt);
+            if (ok || kalan <= 0) {
+              frame.remove();
+              self._render(ok);
+              self.dispatchEvent(new Event("onLoaded"));
+            } else {
+              kalan--;
+              setTimeout(dene, 1000);
+            }
+          })
+          .catch(function () {
+            if (kalan <= 0) {
+              frame.remove();
+              self._rows = [];
+              self._render(false);
+              self.dispatchEvent(new Event("onLoaded"));
+            } else {
+              kalan--;
+              setTimeout(dene, 1000);
+            }
+          });
+      };
+      setTimeout(dene, 1500);
+    }
+
     // Cross-origin (orn. Datasphere) icin: cookie'li ASYNC GET.
     // Bitince "onLoaded" event'i tetiklenir — script'in devami o event'e yazilir.
     loadAsync(url) {
