@@ -156,23 +156,31 @@
         });
       const start = from || 0;
       const end = count > 0 ? Math.min(start + count, this._rows.length) : this._rows.length;
+
+      // Kolon tipi tespiti: herhangi bir satirda sayi gorulen kolon SAYISALDIR
+      // -> null/bos deger sayisal kolonda 0, digerlerinde "#" olur
+      const numericCols = {};
+      for (let r = 0; r < this._rows.length; r++) {
+        for (const k in this._rows[r]) {
+          if (typeof this._rows[r][k] === "number") numericCols[k] = true;
+        }
+      }
+      const fill = (col, v) =>
+        (v === null || v === undefined || v === "") ? (numericCols[col] ? 0 : "#") : v;
+
       const out = [];
       for (let r = start; r < end; r++) {
         const row = this._rows[r];
         const o = {};
         if (copyAll) {
-          for (const k in row) {
-            const v = row[k];
-            o[k] = (v === null || v === undefined || v === "") ? "#" : v;
-          }
+          for (const k in row) o[k] = fill(k, row[k]);
         }
         for (let m = 0; m < maps.length; m++) {
           const src = maps[m].s;
           if (src.length > 1 && src.charAt(0) === "'" && src.charAt(src.length - 1) === "'") {
             o[maps[m].t] = src.substring(1, src.length - 1);
           } else {
-            const v = this._fieldRaw(row, src);
-            o[maps[m].t] = (v === null || v === "") ? "#" : v;
+            o[maps[m].t] = fill(src, this._fieldRaw(row, src));
           }
         }
         out.push(o);
