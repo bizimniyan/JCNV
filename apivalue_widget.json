@@ -6,20 +6,20 @@
     "vendor": "Custom",
     "license": "",
     "id": "com.custom.apivalue",
-    "version": "1.0.12",
+    "version": "1.0.13",
     "icon": "",
     "webcomponents": [
         {
             "kind": "main",
             "tag": "custom-api-value",
-            "url": "https://bizimniyan.github.io/JCNV/main.js?v=112",
+            "url": "https://bizimniyan.github.io/JCNV/main.js?v=113",
             "integrity": "",
             "ignoreIntegrity": true
         },
         {
             "kind": "builder",
             "tag": "custom-api-value-builder",
-            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=112",
+            "url": "https://bizimniyan.github.io/JCNV/builder.js?v=113",
             "integrity": "",
             "ignoreIntegrity": true
         }
@@ -66,6 +66,15 @@
                     "type": "string",
                     "description": "GET URL"
                 }
+            ]
+        },
+        "loadToken": {
+            "description": "OAuth'lu cross-origin ASYNC GET (cookie'siz): client_credentials token + Bearer; bitince onLoaded tetiklenir",
+            "parameters": [
+                { "name": "url", "type": "string" },
+                { "name": "tokenUrl", "type": "string" },
+                { "name": "clientId", "type": "string" },
+                { "name": "clientSecret", "type": "string" }
             ]
         },
         "getCount": {

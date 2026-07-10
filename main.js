@@ -98,6 +98,49 @@
       }
     }
 
+    // Cross-origin OAuth'lu ASYNC GET (cookie'siz): once client_credentials ile token alir,
+    // sonra Bearer ile url'i ceker. Bitince "onLoaded" event'i tetiklenir. Token ~50 dk cache'lenir.
+    loadToken(url, tokenUrl, clientId, clientSecret) {
+      this.url = url;
+      const self = this;
+      const fail = function (msg) {
+        self._http = self._http || 0;
+        self._rows = [];
+        self._raw = msg;
+        self._render(false);
+        self.dispatchEvent(new Event("onLoaded"));
+      };
+      const getData = function (tok) {
+        fetch(url, { headers: { "Accept": "application/json", "Authorization": "Bearer " + tok } })
+          .then(function (res) { self._http = res.status; return res.text(); })
+          .then(function (txt) {
+            self._render(self._consume(txt));
+            self.dispatchEvent(new Event("onLoaded"));
+          })
+          .catch(function (err) { fail(String(err)); });
+      };
+      if (this._tok && this._tokExp && Date.now() < this._tokExp) {
+        getData(this._tok);
+        return;
+      }
+      fetch(tokenUrl, {
+        method: "POST",
+        headers: {
+          "Authorization": "Basic " + btoa(clientId + ":" + clientSecret),
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "grant_type=client_credentials"
+      })
+        .then(function (res) { return res.json(); })
+        .then(function (j) {
+          if (!j.access_token) { fail("TOKEN HATASI: " + JSON.stringify(j).substring(0, 150)); return; }
+          self._tok = j.access_token;
+          self._tokExp = Date.now() + Math.max(60, (j.expires_in || 3600) - 600) * 1000;
+          getData(self._tok);
+        })
+        .catch(function (err) { fail("TOKEN HATASI: " + String(err)); });
+    }
+
     // Cross-origin (orn. Datasphere) icin: cookie'li ASYNC GET.
     // Bitince "onLoaded" event'i tetiklenir — script'in devami o event'e yazilir.
     loadAsync(url) {
